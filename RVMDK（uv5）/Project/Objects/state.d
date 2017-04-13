@@ -1,4 +1,5 @@
 .\objects\state.o: ..\Hardware\STATE\state.c
+.\objects\state.o: D:\Program Files\Keil5 MDK\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\state.o: ..\Hardware\STATE\state.h
 .\objects\state.o: ..\User\stm32f4xx.h
 .\objects\state.o: ..\Libraries\CMSIS\core_cm4.h

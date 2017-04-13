@@ -17,16 +17,6 @@ typedef enum
 	Fall_Three
 }STATE_Typedef;
 
-//typedef enum
-//{
-//	No_breakdown,              //无故障
-//	Elevator_stopping,         //区域外停梯故障        
-//	Door_opening_run,          //开门状态下开始运行故障
-//	Level_Static_trapping,     //平层困人故障
-////	Door_opened_continued,     //长时间开门
-//	Open_close_door            //反复开关门故障
-//}STATE_BREAK;
-
 //总层数
 #define MAX_Floor 3
 //每层楼的高度(米)
@@ -38,8 +28,11 @@ typedef enum
 //门开关次数阈值
 #define MAX_DOOR_CLOSE 10
 
+void Normal_state(void);
 void Running_door_open(void);
 void Out_Speed(void);
 void Warning(void);
+void Open_Close_Door(void);
+void State_Breakdown(void);
 
 #endif
