@@ -4,6 +4,7 @@
 #include "key.h"
 #include "state.h"
 #include "timer.h"
+#include "stdio.h"
 	
 //运行状态变量（在state.c里定义）
 extern STATE_Typedef state;  //当前运行状态
@@ -45,7 +46,7 @@ void EXTIX_Init(void)
   EXTI_InitStructure.EXTI_LineCmd = ENABLE;//中断线使能
   EXTI_Init(&EXTI_InitStructure);//配置
 	
-	NVIC_InitStructure.NVIC_IRQChannel = EXTI1_IRQn;//外部中断0
+	NVIC_InitStructure.NVIC_IRQChannel = EXTI1_IRQn;//外部中断1
   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x01;//抢占优先级1
   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x02;//子优先级2
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;//使能外部中断通道
@@ -184,6 +185,8 @@ void EXTI0_IRQHandler(void)                 //门开关状态触发   平层困人故障
 {
 	if(Read_Door == 0)                        //门关闭
 	{
+		printf("门关\r\n");
+		state_breakdown &=~(1<<5);
 		TIM7->CNT=0;                             //清零定时器7的计数器
 		TIM_Cmd(TIM7,DISABLE);                   //关闭定时器7		
 		
@@ -196,6 +199,7 @@ void EXTI0_IRQHandler(void)                 //门开关状态触发   平层困人故障
 	}
 	else                                        //门打开
 		{
+			printf("门开\r\n");
 			TIM_Cmd(TIM7,ENABLE);                   //使能定时器7
 			if(Rise_Fall_FLAG == 0 || Rise_Fall_FLAG == 1)
 				state_breakdown |=1<<1;

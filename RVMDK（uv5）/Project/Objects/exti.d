@@ -41,3 +41,4 @@
 .\objects\exti.o: ..\Hardware\KEY\key.h
 .\objects\exti.o: ..\Hardware\STATE\state.h
 .\objects\exti.o: ..\Hardware\TIMER\timer.h
+.\objects\exti.o: D:\Program Files\Keil5 MDK\ARM\ARMCC\Bin\..\include\stdio.h

@@ -50,10 +50,10 @@ void Normal_state()
 		else if(Rise_Fall_FLAG == 1)
 			printf("正在下降\r\n");
 		else if(Rise_Fall_FLAG == 2)
-			{
-				printf("已经正常停下\r\n");
-				speed = 0;
-			}
+		{
+			printf("已经正常停下\r\n");
+			speed = 0;
+		}
 		else
 		{
 			printf("非正常停下\r\n");
@@ -63,18 +63,6 @@ void Normal_state()
 		printf("运行速度为：%f\r\n",speed);
 		printf("\r\n");
 }
-
-
-//void Running_door_open()
-//{
-//	if(Rise_Fall_FLAG==0 || Rise_Fall_FLAG==1)  //判断电梯是否为运行状态
-//	{
-//		if(Read_Door == 1)                      //电梯门打开    
-//		{	
-//			state_breakdown |=1<<1;
-//		}
-//	}
-//}
 
 void Out_Speed()                         //判断电梯是否超速
 {
@@ -96,6 +84,7 @@ void Warning()                         //判断电梯是否触发手动呼救信号
 
 void State_Breakdown()                 //各种故障判断
 {
+// printf("%d\r\n",state_breakdown);
 	 if((state_breakdown & 1) != 0)
 	 {
 		 if(Read_People==1)
