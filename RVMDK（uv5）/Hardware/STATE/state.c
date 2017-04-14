@@ -20,7 +20,7 @@ float speed;
 //上升下降标志
 //0为上升
 //1为下降
-//其他为静止
+//2为正常停下(平层静止)    3为非正常停下
 u8 Rise_Fall_FLAG = 2; //默认静止
     
 //定时器2计数器的保存值，用来计算电梯运行速度
@@ -49,9 +49,14 @@ void Normal_state()
 			printf("正在上升\r\n");
 		else if(Rise_Fall_FLAG == 1)
 			printf("正在下降\r\n");
+		else if(Rise_Fall_FLAG == 2)
+			{
+				printf("已经正常停下\r\n");
+				speed = 0;
+			}
 		else
 		{
-			printf("已经停下\r\n");
+			printf("非正常停下\r\n");
 			speed = 0;
 		}
 		
@@ -60,16 +65,16 @@ void Normal_state()
 }
 
 
-void Running_door_open()
-{
-	if(Rise_Fall_FLAG==0 || Rise_Fall_FLAG==1)  //判断电梯是否为运行状态
-	{
-		if(Read_Door == 1)                      //电梯门打开    
-		{	
-			state_breakdown |=1<<1;
-		}
-	}
-}
+//void Running_door_open()
+//{
+//	if(Rise_Fall_FLAG==0 || Rise_Fall_FLAG==1)  //判断电梯是否为运行状态
+//	{
+//		if(Read_Door == 1)                      //电梯门打开    
+//		{	
+//			state_breakdown |=1<<1;
+//		}
+//	}
+//}
 
 void Out_Speed()                         //判断电梯是否超速
 {

@@ -39,7 +39,7 @@ void EXTIX_Init(void)
 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOE, EXTI_PinSource0);//PE0 连接到中断线0
 	
 	/* 配置EXTI_Line1,2,3*/
-	EXTI_InitStructure.EXTI_Line = EXTI_Line1 | EXTI_Line2 | EXTI_Line3;
+	EXTI_InitStructure.EXTI_Line = EXTI_Line1 | EXTI_Line2 | EXTI_Line0;
   EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;//中断事件
   EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling; //边沿触发
   EXTI_InitStructure.EXTI_LineCmd = ENABLE;//中断线使能
@@ -76,8 +76,8 @@ void EXTI1_IRQHandler(void)
 		{
 			state = Level_Dynamic;                 //此时运行状态转换为平层运动
 			TIM_Cmd(TIM3,ENABLE);                  //使能定时器3
-			TIM4->CNT=0;                           //清零定时器4的计数器
-			TIM_Cmd(TIM4,DISABLE);                 //关闭定时器4
+//			TIM4->CNT=0;                           //清零定时器4的计数器
+//			TIM_Cmd(TIM4,DISABLE);                 //关闭定时器4
 			
 			if(Rise_Fall_FLAG == 0)
 				Floors++;                            //层数加1
@@ -92,12 +92,12 @@ void EXTI1_IRQHandler(void)
 		//下降沿触发 
 		if(Read_DownLevelingSwitch == 1 && (state == Level_Static || state == Level_Dynamic || state == Fall_One)) 
 		{
-			if(state == Level_Static && Read_Door == 1)   //判断是否是开门状态下开始运行故障
+			if(state == Level_Static && Read_Door == 1)                     //判断是否是开门状态下开始运行故障
 					state_breakdown |=1<<2;
 				
 			state = Rise_One;                      //当前运行状态转换为上升1
 			Rise_Fall_FLAG = 0;                    //正在上升
-			TIM_Cmd(TIM4,ENABLE);                  //使能定时器4
+//			TIM_Cmd(TIM4,ENABLE);                  //使能定时器4
 			
 			TIM5->CNT=0;                             //清零定时器5的计数器
 			TIM_Cmd(TIM5,DISABLE);                   //关闭定时器5	
@@ -124,16 +124,17 @@ void EXTI2_IRQHandler(void)
 		if(Read_UpLevelingSwitch == 1 && state == Rise_Three) //判断当前运行状态是不是上升3           
 		{
 			state = Level_Dynamic;                //此时运行状态转换为平层运动
-			TIM4->CNT=0;                          //清零定时器4的计数器
-			TIM_Cmd(TIM4,DISABLE);                //关闭定时器4
+//			TIM4->CNT=0;                          //清零定时器4的计数器
+//			TIM_Cmd(TIM4,DISABLE);                //关闭定时器4
 			TIM_Cmd(TIM3,ENABLE);                 //使能定时器3
+			
 			TIM_Cmd(TIM2,DISABLE);                //关闭定时器2
 			TIME = TIM2->CNT;                     //读取定时器2的计数器
 			
 			if(Rise_Fall_FLAG == 0)
 				Floors++;                           //层数加1
 			else if(Rise_Fall_FLAG == 1)
-				Floors--;                           //层数减1
+				Floors--;                            //层数减1
 		}
 		if(Read_UpLevelingSwitch == 0 && state == Fall_Two) //判断当前运行状态是不是下降2
 		{
@@ -168,7 +169,7 @@ void EXTI2_IRQHandler(void)
 			state = Fall_One;                     //此时运行状态转换为下降1
 			Rise_Fall_FLAG = 1;                    //正在下降
 			
-			TIM_Cmd(TIM4,ENABLE);                  //使能定时器4
+//		TIM_Cmd(TIM4,ENABLE);                  //使能定时器4
 			
 			TIM5->CNT=0;                             //清零定时器5的计数器
 			TIM_Cmd(TIM5,DISABLE);                   //关闭定时器5	
@@ -186,7 +187,7 @@ void EXTI0_IRQHandler(void)                 //门开关状态触发   平层困人故障
 		TIM7->CNT=0;                             //清零定时器7的计数器
 		TIM_Cmd(TIM7,DISABLE);                   //关闭定时器7		
 		
-		if(Rise_Fall_FLAG!=0 && Rise_Fall_FLAG!=1 )  //平层静止
+		if(Rise_Fall_FLAG == 2)                  //平层静止
 		{
 			Door_closes++;                            //门开关次数加一
 			if(Read_People==1)                       //有人状态
@@ -196,6 +197,8 @@ void EXTI0_IRQHandler(void)                 //门开关状态触发   平层困人故障
 	else                                        //门打开
 		{
 			TIM_Cmd(TIM7,ENABLE);                   //使能定时器7
+			if(Rise_Fall_FLAG == 0 || Rise_Fall_FLAG == 1)
+				state_breakdown |=1<<1;
 			
 	//		Door_close++;                            //门开关次数加一			            
 	

@@ -29,7 +29,7 @@ typedef enum
 #define MAX_DOOR_CLOSE 10
 
 void Normal_state(void);
-void Running_door_open(void);
+//void Running_door_open(void);
 void Out_Speed(void);
 void Warning(void);
 void Open_Close_Door(void);
