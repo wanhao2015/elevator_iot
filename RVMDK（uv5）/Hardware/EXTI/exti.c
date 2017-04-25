@@ -6,24 +6,6 @@
 #include "timer.h"
 #include "stdio.h"
 	
-//运行状态变量（在state.c里定义）
-extern STATE_Typedef state;  //当前运行状态
-
-//电梯故障状态变量(在state.c里定义）
-extern u8 state_breakdown;
-
-//当前层数(在state.c里定义）	
-extern u8 Floors;
-
-//电梯门关闭次数（在state.c里定义）
-extern u8 Door_closes;
-
-//上升下降标志(在state.c里定义）
-extern u8 Rise_Fall_FLAG;
-
-//定时器2计数器的保存值，用来计算电梯运行速度(在state.c里定义）
-extern u32 TIME;
-
 //外部中断初始化程序
 //初始化PE1~2,PE1~2为中断输入.
 void EXTIX_Init(void)

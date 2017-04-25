@@ -15,7 +15,7 @@ u8 Floors = 3;
 u8 Door_closes=0;
 
 //电梯速度
-float speed;
+static float speed;
 
 //上升下降标志
 //0为上升
@@ -78,7 +78,7 @@ void Open_Close_Door()                  //判断电梯门开关次数是否超过设定的阈值
 
 void Warning()                         //判断电梯是否触发手动呼救信号
 {
-	if(Read_warning == 1)
+	if(Read_Warning == 1)
 			state_breakdown |=1<<7;
 }
 

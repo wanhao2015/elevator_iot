@@ -2,19 +2,6 @@
 #include "led.h"
 #include "state.h"
 
-//运行状态变量(在state.c里定义）
-extern STATE_Typedef state;  //当前运行状态
-
-//电梯故障状态变量(在state.c里定义）
-extern u8 state_breakdown;   
-
-//上升下降标志(在state.c里定义）
-extern u8 Rise_Fall_FLAG;
-
-//定时器2计数器的保存值，用来计算电梯运行速度(在state.c中定义)
-//如果定时器2触发中断，则代表区域外停梯，此时设置TIME=0
-extern u32 TIME;
-
 //通用定时器2中断初始化
 //arr：自动重装值。
 //psc：时钟预分频数

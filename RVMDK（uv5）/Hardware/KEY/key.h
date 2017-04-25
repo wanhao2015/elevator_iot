@@ -10,7 +10,7 @@
 #define Read_DownLimitSwitch  GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_3)//读取上限位开关
 #define Read_UpLimitSwitch  GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_4)//读取下限位开关
 #define Read_People  GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_5)        //读取电梯里是否有人     
-#define Read_warning  GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_6)       //读取手动报警呼救按钮触点信号
+#define Read_Warning  GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_6)       //读取手动报警呼救按钮触点信号
 #define KEY7  GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_13)//读取按键1  L
 #define KEY8  GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_15)//读取按键1  L
 #define KEY9  GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_14)//读取按键1  L
